@@ -1,0 +1,1 @@
+0 0,8,10,12,14,16,18,20 * * * /sw/miniforge/envs/dicomsorter/bin/dcmsort.py --base-dir /data --log-file "${DICOMSORTER_LOG_FILE}" --log-max-bytes 100000000 --log-backup-count 10 --do-sort --rename

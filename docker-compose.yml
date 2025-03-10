@@ -1,0 +1,35 @@
+services:
+    rossbuddy:
+        build:
+            context: ./rossbuddy
+            args:
+                UID: ${UID}
+                GID: ${GID}
+        user: ${UID}:${GID}
+        ports:
+            - ${STORESCP_PORT}:${STORESCP_PORT}
+        volumes:
+            - ${INCOMING_DIR}:/data
+        environment:
+            - SLACK_CHANNEL=${SLACK_CHANNEL}
+            - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+            - SLACK_DISABLE=${SLACK_DISABLE}
+            - SUPERVISOR_LOG_FILE=${SUPERVISOR_LOG_FILE}
+            - STORESCP_AE_TITLE=${STORESCP_AE_TITLE}
+            - STORESCP_PORT=${STORESCP_PORT}
+            - STORESCP_LOG_FILE=${STORESCP_LOG_FILE}
+            - STORESCP_LOG_LEVEL=${STORESCP_LOG_LEVEL}
+        restart: unless-stopped
+    dicomsorter:
+        build:
+            context: ./dicomsorter
+            args:
+                UID: ${UID}
+                GID: ${GID}
+                DICOMSORTER_LOG_FILE: ${DICOMSORTER_LOG_FILE}
+        user: ${UID}:${GID}
+        volumes:
+            - ${INCOMING_DIR}:/data
+        environment:
+            - DICOMSORTER_LOG_FILE=${DICOMSORTER_LOG_FILE}
+        restart: unless-stopped
